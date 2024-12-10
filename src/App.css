@@ -1,0 +1,87 @@
+/* .App {
+  text-align: center;
+} */
+a {
+  color: #888888;
+  text-decoration: none;
+  margin: 0 8px;
+}
+a:hover {
+  color: #dddddd;
+}
+/* HOME */
+.homepage {
+  height: 100vh;
+  background: url('./Assests/bader-3.webp') no-repeat;
+  background-position: center;
+  
+}
+.homepage .button {
+  margin-top: 66vh;
+  color: #ffffff;
+}
+
+/* Login */
+
+.form-border {
+  margin-top: 50px;
+  padding-bottom: 25px;
+  border-radius: 22px;
+  border: solid 1px #dddddd;
+}
+
+/* SignUp */
+
+.border-form {
+  margin-top: 50px;
+  padding: 35px;
+  border-radius: 22px;
+  border: solid 1px #dddddd;
+}
+
+/* Logout btn */
+
+.logout {
+  background-color: rgb(98, 98, 99);
+  border-radius: 10px;
+  color: #dddddd;
+  padding: 1px 8px;
+  font-size: 14px;
+}
+.logout:hover{
+  background-color: rgb(145, 145, 145);
+  color: black;
+}
+
+/* BOOKING */
+.booking-form {
+
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+.booking-form .form-group {
+  border: 1px solid #888888;
+  border-radius: 16px;
+  padding: 20px;
+}
+
+.form-number input,
+.form-date input,
+.fullname input {
+  width: 300px;
+}
+form label {
+  margin-bottom: 3px;
+}
+
+/* Dashboard */
+.apointment-table {
+  padding: 20px;
+  border: #888888 1px solid;
+  border-radius: 20px;
+  width: 300px;
+}
+.appointment ul li {
+  list-style: none;
+}
