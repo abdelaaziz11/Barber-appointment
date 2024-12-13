@@ -6,6 +6,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import NavBar from "./Navbar";
 import { auth, db } from "./firebase";
+import { Form } from "react-bootstrap";
 
 function SignUp(props) {
   const [email, setEmail] = useState("");
@@ -38,7 +39,7 @@ function SignUp(props) {
   return (
     <>
       <NavBar />
-      <div className="container">
+      <div className="container signuppage ">
         <div className="border-form">
           <h2 className="heading mb-3">Sign Up</h2>
           <div className="form-group">
@@ -78,6 +79,9 @@ function SignUp(props) {
               onChange={(e) => setPassword(e.target.value)}
               required
             />
+            <Form.Text className="text-muted">
+                        It must be more than 6 characters.
+                    </Form.Text>
           </div>
           <br />
           <button className="btn bg-primary mb-2" onClick={handleSignUp}>

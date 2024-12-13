@@ -1,67 +1,73 @@
-import React, { useRef } from 'react';
+import { addDoc, collection } from 'firebase/firestore';
+import React, { useState } from 'react';
+import { db } from './firebase';
 import NavBar from './Navbar';
 
 function Book() {
-    const fname = useRef()
-    const lname = useRef()
-    const number = useRef()
-    const date = useRef()
+    const [name, setName] = useState(""); // Initialize with an empty string
+    const [number, setNumber] = useState(""); // Initialize with an empty string
+    const [date, setDate] = useState(""); // Initialize with an empty string
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        console.log("submited successfully !!")
-        console.log({
-            fname: fname.current.value,
-            lname: lname.current.value,
-            number: number.current.value,
-            date: date.current.value,
-        });
-    }
+    const handleBooking = async (e) => {
+        e.preventDefault();
+        try {
+            await addDoc(collection(db, 'reservations'), {
+                name,
+                number,
+                date,
+            });
+            alert('Réservation réussie !');
+        } catch (error) {
+            console.error('Erreur de réservation :', error);
+            alert('Erreur lors de la réservation');
+        }
+    };
 
     return (
         <>
             <NavBar />
-            <div className="container text-center mt-5">
-                <h1>Book an Oppointment</h1>
-                <form className="booking-form mt-3">
+            <div className="container bookpage text-center mt-5">
+                <h1>Book an Appointment</h1>
+                <form className="booking-form mt-3" onSubmit={handleBooking}>
                     <div className="form-group">
-                        <div className="fullname">
-                            <label htmlFor="fname">First Name</label>
-                            <input type="text" className="form-control"
-                                id="fname" name="fname" ref={fname}/>
-                                <br />
-                            <label htmlFor="lname">Last Name</label>
-                            <input type="text" className="form-control"
-                                id="lname" name="lname" ref={lname}/>
-                        </div>
-                        <br />
-                        <div className="form-number">
-                            <label htmlFor="date">Phone Number</label>
+                        <div className="name">
+                            <label htmlFor="name">Name</label>
                             <input
-                                type="mobile"
+                                type="text"
                                 className="form-control"
-                                name="date"
-                                id="date"
-                                ref={number}
+                                id="name"
+                                name="name"
+                                onChange={(e) => setName(e.target.value)}
+                                value={name}
+                            />
+                        </div>
+                        <div className="form-number">
+                            <label htmlFor="number">Phone Number</label>
+                            <input
+                                type="tel"
+                                className="form-control"
+                                id="number"
+                                name="number"
+                                onChange={(e) => setNumber(e.target.value)}
+                                value={number}
                                 required
                             />
                         </div>
-                        <br />
                         <div className="form-date">
                             <label htmlFor="date">Date</label>
                             <input
                                 type="date"
                                 className="form-control"
-                                name="date"
                                 id="date"
-                                ref={date}
+                                name="date"
+                                onChange={(e) => setDate(e.target.value)}
+                                value={date}
                                 required
                             />
                         </div>
-                        <button className="btn bg-primary mt-4 text-white" 
-                        type="submit"
-                        onClick={handleSubmit}
-                        >Submit</button>
+                        <button className="btn bg-primary mt-4 text-white" type="submit">
+                            Submit
+                        </button>
                     </div>
                 </form>
             </div>

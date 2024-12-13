@@ -30,7 +30,7 @@ function Login() {
     return (
         <>
         <NavBar/>
-        <div className="container">
+        <div className="container loginpage">
             <div className="form-border border-2">
             <Form className="login-form mx-5 mt-5">
                 <h2 className="heading mb-3">Login</h2>
@@ -40,9 +40,6 @@ function Login() {
                         onChange={(e) => setEmail(e.target.value)}
                         value={email}
                     />
-                    {/* <Form.Text className="text-muted">
-                        We'll never share your email with anyone else.
-                </Form.Text> */}
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -51,10 +48,10 @@ function Login() {
                         onChange={(e) => setPassword(e.target.value)}
                         value={password}
                     />
+                    {/* <Form.Text className="text-muted">
+                        It must be more than 6 characters.
+                    </Form.Text> */}
                 </Form.Group>
-               {/*  <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                    <Form.Check type="checkbox" label="Check me out" />
-                </Form.Group> */}
                 <Button variant="primary" type="submit" onClick={handleLogin}>
                     Login
                 </Button>

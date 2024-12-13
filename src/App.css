@@ -23,6 +23,9 @@ a:hover {
 
 /* Login */
 
+.loginpage {
+  height: 90vh;
+}
 .form-border {
   margin-top: 50px;
   padding-bottom: 25px;
@@ -31,7 +34,9 @@ a:hover {
 }
 
 /* SignUp */
-
+.signuppage {
+  height: 105vh;
+}
 .border-form {
   margin-top: 50px;
   padding: 35px;
@@ -54,8 +59,10 @@ a:hover {
 }
 
 /* BOOKING */
+.bookpage {
+  height: 100vh;
+}
 .booking-form {
-
   display: flex;
   justify-content: center;
   width: 100%;
@@ -68,8 +75,13 @@ a:hover {
 
 .form-number input,
 .form-date input,
-.fullname input {
+.name input {
   width: 300px;
+  margin-bottom: 7px;
+  text-align: center;
+}
+.form-date input {
+  color: #888888;
 }
 form label {
   margin-bottom: 3px;
