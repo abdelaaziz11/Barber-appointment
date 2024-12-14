@@ -38,8 +38,7 @@ function Dashboard() {
         <>
             <NavBar />
             <div className="container text-center">
-                <h1>WELCOME to the Dashboard</h1>
-                <p>Your Appointments</p>
+                <h3 className="mt-5 mb-3">Your Appointment</h3>
                 <div className="appointment d-flex justify-content-center">
                     {reservations.length === 0 ? (
                         <p>No reservations available.</p>
