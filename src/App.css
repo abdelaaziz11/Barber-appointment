@@ -12,13 +12,16 @@ a:hover {
 /* HOME */
 .homepage {
   height: 100vh;
-  background: url('./Assests/bader-3.webp') no-repeat;
+  background: url('./Assests/homei-mage2.jpeg') no-repeat;
   background-position: center;
   
 }
-.homepage .button {
-  margin-top: 66vh;
-  color: #ffffff;
+.headinghome {
+  padding-top: 170px;
+  color: rgb(255, 120, 36);
+}
+.paragraph {
+  color: rgb(255, 120, 36);
 }
 
 /* Login */
