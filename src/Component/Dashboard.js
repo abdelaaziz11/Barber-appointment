@@ -10,10 +10,16 @@ function Dashboard() {
         const fetchReservations = async () => {
             try {
                 const querySnapshot = await getDocs(collection(db, "reservations"));
-                const fetchedReservations = querySnapshot.docs.map((doc) => ({
-                    id: doc.id, // Include document ID for potential delete operations
-                    ...doc.data(),
-                }));
+                const fetchedReservations = querySnapshot.docs.map((doc) => {
+                    const data = doc.data();
+                    return {
+                        id: doc.id, // Include document ID for potential delete operations
+                        ...data,
+                        // Convert Firestore Timestamps to readable formats
+                        date: data.date?.toDate().toLocaleString() || "N/A",
+                        //end: data.end?.toDate().toLocaleString() || "N/A",
+                    };
+                });
                 setReservations(fetchedReservations);
             } catch (error) {
                 console.error("Error fetching reservations:", error);
@@ -23,8 +29,8 @@ function Dashboard() {
         fetchReservations();
     }, []);
 
-     // Delete a reservation
-     const handleDelete = async (id) => {
+    // Delete a reservation
+    const handleDelete = async (id) => {
         try {
             await deleteDoc(doc(db, "reservations", id)); // Remove the reservation from Firestore
             setReservations((prev) => prev.filter((reservation) => reservation.id !== id)); // Update the local state
@@ -46,9 +52,9 @@ function Dashboard() {
                         reservations.map((reservation) => (
                             <div key={reservation.id} className="apointment-table">
                                 <ul>
-                                    <li>Appointment Date: {reservation.date}</li>
-                                    <li>Name: {reservation.name}</li>
-                                    <li>Phone Number: {reservation.number}</li>
+                                    <li>Date: {reservation.date}</li>
+                                    <li>Service: {reservation.service}</li>
+                                    <li>Description: {reservation.description}</li>
                                 </ul>
                                 <button
                                     type="button"

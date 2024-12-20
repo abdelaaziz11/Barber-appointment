@@ -20,6 +20,7 @@ const NavBarLogin = () => {
         <Nav className="me-auto">
             <Link to="/dashboard">Appointments</Link>
             <Link to="/book">Book</Link>
+            <Link to="/booking">Booking</Link>
             <Link to="/login" className="logout bg-primary " onClick={handleLogout}>Logout</Link>
         </Nav>
     )

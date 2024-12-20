@@ -12,12 +12,12 @@ a:hover {
 /* HOME */
 .homepage {
   height: 100vh;
-  background: url('./Assests/homei-mage2.jpeg') no-repeat;
+  background: url('./Assests/bader-3.webp') no-repeat;
   background-position: center;
   
 }
 .headinghome {
-  padding-top: 170px;
+  padding-top: 200px;
   color: rgb(255, 120, 36);
 }
 .paragraph {
@@ -100,4 +100,36 @@ form label {
 
 .appointment ul li {
   list-style: none;
+}
+
+/*---------------------------------*/
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+Booking {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }

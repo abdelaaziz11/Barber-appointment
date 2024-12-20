@@ -13,6 +13,8 @@ import SignUp from './Component/SignUp';
 import Dashboard from './Component/Dashboard';
 import { auth } from './Component/firebase';
 import Book from './Component/Book';
+import Booking from './Component/Booking';
+
 
 function App() {
   const [user, setUser] = useState();
@@ -29,6 +31,7 @@ function App() {
             <Routes>
               <Route path="/" element={user ? <Navigate to="/dashboard" /> : <Home/>} />
               <Route path="/home" element={<Home/>} />
+              <Route path="/booking" element={<Booking auth={auth} />} />
               <Route path="/login" element={<Login/>} />
               <Route path="/signup" element={<SignUp/>} />
               <Route path="/dashboard" element={<Dashboard/>} />

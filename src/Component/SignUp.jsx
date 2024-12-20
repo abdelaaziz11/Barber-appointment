@@ -18,6 +18,7 @@ function SignUp(props) {
     try {
       await createUserWithEmailAndPassword(auth, email, password);
       const user = auth.currentUser;
+      window.location.href="/dashboard"
       console.log(user);
       if (user) {
         await setDoc(doc(db, "Users", user.uid), {
