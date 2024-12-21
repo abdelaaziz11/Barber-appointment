@@ -21,67 +21,6 @@ function Booking({ auth }) {
     return unsubscribe;
   }, [auth]);
 
-  // async function googleSignIn() {
-  //   const provider = new GoogleAuthProvider();
-  //   provider.addScope('https://www.googleapis.com/auth/calendar');
-  //   try {
-  //     const result = await signInWithPopup(auth, provider);
-  //     console.log("User signed in:", result.user);
-  //   } catch (error) {
-  //     console.error("Error during sign-in:", error);
-  //   }
-  // }
-
-  // async function handleSignOut() {
-  //   await signOut(auth);
-  //   setUser(null);
-  // }
-
-  /*async function createCalnderBook(e) {
-    e.preventDefault()
-    console.log("Creating calendar event");
-    const token = await auth.currentUser.getIdToken(true);
-
-    const event = {
-      summary: service,
-      description: description,
-      date: {
-        dateTime: date.toISOString(),
-        timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-      },
-    };
-
-
-    await fetch("https://www.googleapis.com/calendar/v3/calendars/primary/events", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(event),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Event created:", data);
-        alert("Created, check your Google Calendar, and Appointment!");
-      })
-      .catch((error) => console.error("Error creating event:", error));
-
-    
-      try {
-        await addDoc(collection(db, 'reservations'), {
-            date,
-            service,
-            description,
-        });
-    } catch (error) {
-        console.error('Erreur de réservation :', error);
-        alert('Erreur lors de la réservation');
-    }
-
-  }*/
-
-
   async function createCalnderBook(e) {
     e.preventDefault();
     console.log("Creating calendar event");
@@ -146,8 +85,6 @@ function Booking({ auth }) {
             <form className="form-booking mt-2 text-center">
             <p>Date of your appointment</p>
             <DateTimePicker onChange={setDate} value={date} />
-            {/* <p>End of your event</p>
-            <DateTimePicker onChange={setEnd} value={end} /> */}
             <p className="mt-3">Service</p>
             <input type="text" onChange={(e) => setService(e.target.value)} />
             <p>Description</p>
