@@ -1,15 +1,43 @@
 import { useState, useEffect } from "react";
-import { collection, getDocs, doc, deleteDoc } from "firebase/firestore";
+import { collection, getDocs, doc, deleteDoc, query, where } from "firebase/firestore";
 import { db } from "./firebase";
 import NavBar from "./Navbar";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+
 
 function Dashboard() {
     const [reservations, setReservations] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [user, setUser] = useState(true);
+
+    useEffect(() => {
+        console.log("Current user:", user);
+    }, [user]);
+
+    useEffect(() => {
+        // Listen for authentication state changes
+        const auth = getAuth();
+        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+            setUser(currentUser); // Set the user when authenticated
+            setLoading(false); // Stop loading once user is set
+        });
+
+        // Cleanup the listener on component unmount
+        return () => unsubscribe();
+    }, []);
 
     useEffect(() => {
         const fetchReservations = async () => {
+            if (!user) {
+                console.log("User is not defined yet. Skipping Firestore query.");
+                return;
+            }
+
             try {
-                const querySnapshot = await getDocs(collection(db, "reservations"));
+                const reservationsRef = collection(db, "reservations");
+                const q = query(reservationsRef, where("userId", "==", user.uid));
+                const querySnapshot = await getDocs(q);
+
                 const fetchedReservations = querySnapshot.docs.map((doc) => {
                     const data = doc.data();
                     return {
@@ -17,7 +45,6 @@ function Dashboard() {
                         ...data,
                         // Convert Firestore Timestamps to readable formats
                         date: data.date?.toDate().toLocaleString() || "N/A",
-                        //end: data.end?.toDate().toLocaleString() || "N/A",
                     };
                 });
                 setReservations(fetchedReservations);
@@ -27,7 +54,7 @@ function Dashboard() {
         };
 
         fetchReservations();
-    }, []);
+    }, [user]);
 
     // Delete a reservation
     const handleDelete = async (id) => {
