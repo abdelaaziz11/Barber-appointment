@@ -37,7 +37,7 @@ function Booking({ auth }) {
   //   setUser(null);
   // }
 
-  async function createCalnderBook(e) {
+  /*async function createCalnderBook(e) {
     e.preventDefault()
     console.log("Creating calendar event");
     const token = await auth.currentUser.getIdToken(true);
@@ -49,10 +49,6 @@ function Booking({ auth }) {
         dateTime: date.toISOString(),
         timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
       },
-      // end: {
-      //   dateTime: end.toISOString(),
-      //   timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-      // },
     };
 
 
@@ -83,8 +79,61 @@ function Booking({ auth }) {
         alert('Erreur lors de la réservation');
     }
 
-  }
+  }*/
 
+
+  async function createCalnderBook(e) {
+    e.preventDefault();
+    console.log("Creating calendar event");
+  
+    if (!auth.currentUser) {
+      alert("You must be logged in to create an appointment.");
+      return;
+    }
+  
+    const token = await auth.currentUser.getIdToken(true);
+  
+    const event = {
+      summary: service,
+      description: description,
+      date: {
+        dateTime: date.toISOString(),
+        timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+      },
+    };
+  
+    try {
+      // Create Google Calendar Event
+      await fetch("https://www.googleapis.com/calendar/v3/calendars/primary/events", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(event),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Event created:", data);
+          alert("Created, check your Google Calendar and Appointment!");
+        })
+        .catch((error) => console.error("Error creating event:", error));
+  
+      // Save reservation in Firestore
+      await addDoc(collection(db, 'reservations'), {
+        date,
+        service,
+        description,
+        userId: auth.currentUser.uid, // Include the user's UID
+      });
+  
+      alert('Reservation created successfully!');
+    } catch (error) {
+      console.error("Error creating reservation:", error);
+      alert("Error creating the reservation.");
+    }
+  }
+  
 
   return (
     <>

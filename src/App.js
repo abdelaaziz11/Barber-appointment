@@ -34,7 +34,7 @@ function App() {
               <Route path="/booking" element={<Booking auth={auth} />} />
               <Route path="/login" element={<Login/>} />
               <Route path="/signup" element={<SignUp/>} />
-              <Route path="/dashboard" element={<Dashboard/>} />
+              <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/book" element={<Book/>} />
             </Routes>
           </div>
