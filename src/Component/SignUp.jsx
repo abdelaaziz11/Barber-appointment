@@ -12,6 +12,7 @@ function SignUp(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
+  const [role, setRole] = useState();
 
   const handleSignUp = async (e) => {
     e.preventDefault();
@@ -24,7 +25,9 @@ function SignUp(props) {
         await setDoc(doc(db, "Users", user.uid), {
           email: user.email,
           fullName: fullName,
+          role: role,
         });
+        setRole("user");
       }
       toast.success("User Registered Successfully!!", {
         position: "top-center",

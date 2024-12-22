@@ -10,7 +10,7 @@ function Dashboard() {
     const [loading, setLoading] = useState(true);
     const [user, setUser] = useState(true);
 
-    // check the user is true or false
+    // check the user is true
     useEffect(() => {
         console.log("Current user:", user);
     }, [user]);
