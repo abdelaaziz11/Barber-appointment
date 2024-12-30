@@ -10,19 +10,15 @@ const NavBarLogin = ({ handleLogout }) => (
     <NavLink to="/dashboard" className="nav-link">
       Appointments
     </NavLink>
-    <NavLink to="/book" className="nav-link">
+    {/* <NavLink to="/book" className="nav-link">
       Book
-    </NavLink>
+    </NavLink> */}
     <NavLink to="/booking" className="nav-link">
       Booking
     </NavLink>
-    <NavLink
-      to="/login"
-      className="nav-link logout"
-      onClick={handleLogout}
-    >
+    <NavLink to="/login" className="nav-link logout" onClick={handleLogout}>
       Logout
-      </NavLink>
+    </NavLink>
   </Nav>
 );
 
@@ -42,12 +38,10 @@ const NavBarLogout = () => (
 
 function NavBar() {
   const [logged, setLogged] = useState(false);
-  const [user, setUser] = useState(null);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((currentUser) => {
       setLogged(!!currentUser);
-      setUser(currentUser);
     });
     return () => unsubscribe();
   }, []);
@@ -70,11 +64,7 @@ function NavBar() {
         <Navbar.Brand href="/">Barber</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          {logged ? (
-            <NavBarLogin handleLogout={handleLogout} />
-          ) : (
-            <NavBarLogout />
-          )}
+          {logged ? <NavBarLogin handleLogout={handleLogout} /> : <NavBarLogout />}
         </Navbar.Collapse>
       </Container>
     </Navbar>

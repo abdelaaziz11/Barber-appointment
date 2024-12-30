@@ -6,20 +6,24 @@ a {
   text-decoration: none;
   margin: 0 8px;
 }
+
 a:hover {
   color: #dddddd;
 }
+
 /* HOME */
 .homepage {
   height: 100vh;
   background: url('./Assests/bader-3.webp') no-repeat;
   background-position: center;
-  
+
 }
+
 .headinghome {
   padding-top: 200px;
   color: rgb(255, 120, 36);
 }
+
 .paragraph {
   color: rgb(255, 120, 36);
 }
@@ -29,6 +33,7 @@ a:hover {
 .loginpage {
   height: 90vh;
 }
+
 .form-border {
   margin-top: 50px;
   padding-bottom: 25px;
@@ -40,6 +45,7 @@ a:hover {
 .signuppage {
   height: 105vh;
 }
+
 .border-form {
   margin-top: 50px;
   padding: 35px;
@@ -56,7 +62,8 @@ a:hover {
   padding: 1px 8px;
   font-size: 14px;
 }
-.logout:hover{
+
+.logout:hover {
   background-color: rgb(145, 145, 145);
   color: black;
 }
@@ -65,11 +72,13 @@ a:hover {
 .bookpage {
   height: 100vh;
 }
+
 .booking-form {
   display: flex;
   justify-content: center;
   width: 100%;
 }
+
 .booking-form .form-group {
   border: 1px solid #888888;
   border-radius: 16px;
@@ -83,9 +92,11 @@ a:hover {
   margin-bottom: 7px;
   text-align: center;
 }
+
 .form-date input {
   color: #888888;
 }
+
 form label {
   margin-bottom: 3px;
 }
@@ -100,6 +111,24 @@ form label {
 
 .appointment ul li {
   list-style: none;
+}
+
+.applist li {
+  list-style: decimal-leading-zero;
+  width: 300px;
+  border: #dddddd 1px solid;
+  border-radius: 12px;
+  margin: 1px;
+}
+
+.applist {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: #dddddd 1px solid;
+  border-radius: 20px;
+  margin: 0 90px;
+  padding: 10px 0;
 }
 
 /*---------------------------------*/
@@ -129,7 +158,24 @@ Booking {
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
+}
+
+
+.nav-link {
+  color: white;
+  text-decoration: none;
+  margin-right: 15px;
+  padding-top: 6px;
+}
+
+.nav-link:hover {
+  color: #ccc;
+}
+
+.logout {
+  color: rgb(199, 22, 22);
 }

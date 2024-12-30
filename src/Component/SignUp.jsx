@@ -8,32 +8,32 @@ import NavBar from "./Navbar";
 import { auth, db } from "./firebase";
 import { Form } from "react-bootstrap";
 
-function SignUp(props) {
+function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
-  const [role, setRole] = useState();
 
   const handleSignUp = async (e) => {
     e.preventDefault();
     try {
       await createUserWithEmailAndPassword(auth, email, password);
       const user = auth.currentUser;
-      window.location.href="/dashboard"
       console.log(user);
+
       if (user) {
         await setDoc(doc(db, "Users", user.uid), {
           email: user.email,
           fullName: fullName,
-          role: role,
+          role: "user", // All users are registered as "user"
         });
-        setRole("user");
+        window.location.href="/dashboard";
       }
+
       toast.success("User Registered Successfully!!", {
         position: "top-center",
       });
     } catch (error) {
-      console.log(error.message);
+      console.error("Error registering user:", error.message);
       toast.error(error.message, {
         position: "bottom-center",
       });
@@ -43,7 +43,7 @@ function SignUp(props) {
   return (
     <>
       <NavBar />
-      <div className="container signuppage ">
+      <div className="container signuppage">
         <div className="border-form">
           <h2 className="heading mb-3">Sign Up</h2>
           <div className="form-group">
@@ -84,8 +84,8 @@ function SignUp(props) {
               required
             />
             <Form.Text className="text-muted">
-                        It must be more than 6 characters.
-                    </Form.Text>
+              Password must be at least 6 characters.
+            </Form.Text>
           </div>
           <br />
           <button className="btn bg-primary mb-2" onClick={handleSignUp}>

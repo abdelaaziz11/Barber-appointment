@@ -1,103 +1,78 @@
-import { useState, useEffect } from "react";
-import { collection, getDocs, doc, deleteDoc, query, where } from "firebase/firestore";
-import { db } from "./firebase";
+import React, { useEffect, useState } from "react";
+import { db, auth } from "./firebase";
+import { collection, query, where, getDocs, getDoc, doc } from "firebase/firestore";
 import NavBar from "./Navbar";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
 
+const Dashboard = () => {
+  const [appointments, setAppointments] = useState([]);
+  const [role, setRole] = useState("");
+  const [loading, setLoading] = useState(true);
 
-function Dashboard() {
-    const [reservations, setReservations] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [user, setUser] = useState(true);
+  useEffect(() => {
+    const fetchUserRoleAndData = async () => {
+      try {
+        setLoading(true);
+        const user = auth.currentUser;
 
-    // check the user is true
-    useEffect(() => {
-        console.log("Current user:", user);
-    }, [user]);
+        if (user) {
+          // Fetch user role from Firestore
+          const userDoc = await getDoc(doc(db, "Users", user.uid));
+          const userData = userDoc.data();
+          setRole(userData?.role || "user");
 
-    useEffect(() => {
-        // Listen for authentication state changes
-        const auth = getAuth();
-        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-            setUser(currentUser); // Set the user when authenticated
-            setLoading(false); // Stop loading once user is set
-        });
-
-        // Cleanup the listener on component unmount
-        return () => unsubscribe();
-    }, []);
-
-    useEffect(() => {
-        const fetchReservations = async () => {
-            if (!user) {
-                console.log("User is not defined yet. Skipping Firestore query.");
-                return;
-            }
-
-            try {
-                const reservationsRef = collection(db, "reservations");
-                const q = query(reservationsRef, where("userId", "==", user.uid));
-                const querySnapshot = await getDocs(q);
-
-                const fetchedReservations = querySnapshot.docs.map((doc) => {
-                    const data = doc.data();
-                    return {
-                        id: doc.id, // Include document ID for potential delete operations
-                        ...data,
-                        // Convert Firestore Timestamps to readable formats
-                        date: data.date?.toDate().toLocaleString() || "N/A",
-                    };
-                });
-                setReservations(fetchedReservations);
-            } catch (error) {
-                console.error("Error fetching reservations:", error);
-            }
-        };
-
-        fetchReservations();
-    }, [user]);
-
-    // Delete a reservation
-    const handleDelete = async (id) => {
-        try {
-            await deleteDoc(doc(db, "reservations", id)); // Remove the reservation from Firestore
-            setReservations((prev) => prev.filter((reservation) => reservation.id !== id)); // Update the local state
-            console.log(`Reservation with ID: ${id} deleted successfully.`);
-        } catch (error) {
-            console.error("Error deleting reservation:", error);
+          // Fetch appointments based on user role
+          const bookingsRef = collection(db, "bookings");
+          if (userData?.role === "admin") {
+            const snapshot = await getDocs(bookingsRef);
+            const allBookings = snapshot.docs.map((doc) => ({
+              id: doc.id,
+              ...doc.data(),
+            }));
+            setAppointments(allBookings);
+          } else {
+            const q = query(bookingsRef, where("userId", "==", user.uid));
+            const snapshot = await getDocs(q);
+            const userBookings = snapshot.docs.map((doc) => ({
+              id: doc.id,
+              ...doc.data(),
+            }));
+            setAppointments(userBookings);
+          }
         }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
+      }
     };
 
-    return (
-        <>
-            <NavBar />
-            <div className="container text-center">
-                <h3 className="mt-5 mb-3">Your Appointment</h3>
-                <div className="appointment d-flex justify-content-center">
-                    {reservations.length === 0 ? (
-                        <p>No reservations available.</p>
-                    ) : (
-                        reservations.map((reservation) => (
-                            <div key={reservation.id} className="apointment-table">
-                                <ul>
-                                    <li>Date: {reservation.date}</li>
-                                    <li>Service: {reservation.service}</li>
-                                    <li>Description: {reservation.description}</li>
-                                </ul>
-                                <button
-                                    type="button"
-                                    className="btn btn-danger"
-                                    onClick={() => handleDelete(reservation.id)}
-                                >
-                                    Delete
-                                </button>
-                            </div>
-                        ))
-                    )}
-                </div>
-            </div>
-        </>
-    );
-}
+    fetchUserRoleAndData();
+  }, []);
+
+  if (loading) {
+    return <p className="text-center mt-5">Loading...</p>;
+  }
+
+  return (
+    <>
+      <NavBar />
+      <div className="container text-center mt-3">
+        <h1>{role === "admin" ? "Admin Dashboard" : "User Dashboard"}</h1>
+        <h2>Your Appointments</h2>
+        {appointments.length === 0 ? (
+          <p>No appointments found.</p>
+        ) : (
+          <ul className="applist">
+            {appointments.map((appointment) => (
+              <li key={appointment.id}>
+                {appointment.service} | {appointment.date} | {appointment.time}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </>
+  );
+};
 
 export default Dashboard;
