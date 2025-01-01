@@ -26,7 +26,7 @@ function SignUp() {
           fullName: fullName,
           role: "user", // All users are registered as "user"
         });
-        window.location.href="/dashboard";
+        window.location.href="/booking";
       }
 
       toast.success("User Registered Successfully!!", {

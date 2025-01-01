@@ -16,7 +16,7 @@ function Login() {
         try {
             await signInWithEmailAndPassword(auth, email, password)
             console.log("User Logged in Successfully!!")
-            window.location.href="/dashboard"
+            window.location.href="/booking"
             toast.success("User Logged in Successfully!!", {
                 position: "top-center",
               });
