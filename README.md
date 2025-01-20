@@ -91,9 +91,9 @@ This project is licensed under the MIT License. See the LICENSE file for details
 
 ## Contact
 For any inquiries or feedback, feel free to reach out:
-- **LinkedIn**: [Your LinkedIn Profile](https://www.linkedin.com/in/abdel-
+- **LinkedIn**: [LinkedIn Profile](https://www.linkedin.com/in/abdel-
 khouda-502b03253/)
-- **Email**: [your-email@example.com](mabdelkhouda055@gmail.com)
+- **Email**: [abdelkhouda055@gmail.com](mailto:abdelkhouda055@gmail.com)
 
 ---
 
